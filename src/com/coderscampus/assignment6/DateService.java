@@ -5,9 +5,9 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Date {
-	
-	private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormatter.ofPattern("MMM-yy", Locale.US);
+public class DateService {
+
+    private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormatter.ofPattern("MMM-yy", Locale.US);
     private static final DateTimeFormatter YEAR_MONTH_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM");
 
     public static Month parseMonthFromCSV(String dateString) {

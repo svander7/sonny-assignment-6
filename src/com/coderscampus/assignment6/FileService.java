@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class File {
-	
-	public static List<SalesInfo> readCSV(String fileName) {
-        List<SalesInfo> salesData;
+public class FileService {
+
+    public static List<Sale> readCSV(String fileName) {
+        List<Sale> salesData;
 
         try (BufferedReader reader = createBufferedReader(fileName)) {
             skipHeader(reader);
@@ -31,23 +31,23 @@ public class File {
         reader.readLine();
     }
 
-    private static List<SalesInfo> processLines(BufferedReader reader) throws IOException {
-        List<SalesInfo> salesData = new ArrayList<>();
+    private static List<Sale> processLines(BufferedReader reader) throws IOException {
+        List<Sale> salesData = new ArrayList<>();
         String line;
         while((line = reader.readLine()) != null) {
-            SalesInfo sales = convertLineToSale(line);
-            salesData.add(sales);
+            Sale sale = convertLineToSale(line);
+            salesData.add(sale);
         }
         return salesData;
     }
 
-    private static SalesInfo convertLineToSale(String line) {
+    private static Sale convertLineToSale(String line) {
         String[] values = line.split(",");
         // Defensive programming
         if (values.length < 2) {
             throw new IllegalArgumentException("Invalid CSV line format: " + line);
         }
-        return Sale.createSalesFromStrings(values[0], values[1]);
+        return SalesService.createSalesFromStrings(values[0], values[1]);
     }
 
     static class FileReadException extends RuntimeException {

@@ -1,58 +1,50 @@
 package com.coderscampus.assignment6;
 
 import java.time.Month;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class Sale {
-	
-	public static Sales createSalesFromStrings(String dateString, String salesString) {
-        // Defensive programming
-        if (dateString == null || dateString.isEmpty() || salesString == null || salesString.isEmpty()) {
-            throw new IllegalArgumentException("Invalid date or sales data: " + dateString + ", " + salesString);
-        }
-        Month month = Date.parseMonthFromCSV(dateString);
-        Integer year = Date.parseYearFromCSV(dateString);
-        Integer sales = Integer.parseInt(salesString);
-        return new Sales(month, year, sales);
+
+    //Instance Variables
+    private Month month;
+    private Integer year;
+    private Integer sale;
+
+    // Constructor
+    public Sale(Month month, Integer year, Integer sale) {
+        this.month = month;
+        this.year = year;
+        this.sale = sale;
+    }
+    public Month getMonth() {
+        return month;
     }
 
-    public static void printYearlySalesReport(String modelName, List<SalesInfo> salesData) {
-        printReportHeader(modelName);
-        Map<Integer, Integer> yearlySales = retrieveYearlySales(salesData);
-        yearlySales.forEach((year, sales) -> System.out.println(year + " -> " + sales));
-        System.out.println();
-        printBestSalesMonth(modelName, salesData);
-        printWorstSalesMonth(modelName, salesData);
+    public void setMonth(Month month) {
+        this.month = month;
     }
 
-    private static void printReportHeader(String modelName) {
-        System.out.println(modelName + " Yearly Sales Report");
-        System.out.println("----------------------");
+    public Integer getYear() {
+        return year;
     }
 
-    public static Map<Integer, Integer> retrieveYearlySales(List<Sale> salesData) {
-        return salesData.stream()
-                .collect(Collectors.groupingBy(Sale::getYear, Collectors.summingInt(Sale::getSale)));
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
-    private static void printBestSalesMonth(String modelName, List<Sale> salesData) {
-        Optional<Sale> best = bestMonth(salesData);
-        best.ifPresent(sale -> System.out.println("The best month for " + modelName + " was: " + DateService.formatMonthYear(sale.getMonth(), sale.getYear())));
+    public Integer getSale() {
+        return sale;
     }
 
-    private static void printWorstSalesMonth(String modelName, List<Sale> salesData) {
-        Optional<Sale> worst = worstMonth(salesData);
-        worst.ifPresent(sale -> System.out.println("The worst month for " + modelName + " was: " + DateService.formatMonthYear(sale.getMonth(), sale.getYear())));
-        System.out.println();
+    public void setSale(Integer sale) {
+        this.sale = sale;
     }
 
-    public static Optional<Sale> bestMonth(List<Sale> salesData) {
-        return salesData.stream().max(Comparator.comparingInt(Sale::getSale));
+    @Override
+    public String toString() {
+        return "domain.Sale{" +
+                "month='" + month + '\'' +
+                ", year=" + year +
+                ", sale=" + sale +
+                '}';
     }
-
-    public static Optional<Sale> worstMonth(List<Sale> salesData) {
-        return salesData.stream().min(Comparator.comparingInt(Sale::getSale));
-    }
-
 }

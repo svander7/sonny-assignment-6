@@ -1,6 +1,6 @@
 package com.coderscampus.assignment6;
 
-public enum Models {
+public enum TeslaModel {
 	
     MODEL_3("Model 3", "model3.csv"),
     MODEL_S("Model S", "modelS.csv"),
@@ -9,7 +9,7 @@ public enum Models {
     private final String displayName;
     private final String csvFileName;
 
-    Models(String displayName, String csvFileName) {
+    TeslaModel(String displayName, String csvFileName) {
         this.displayName = displayName;
         this.csvFileName = csvFileName;
     }
